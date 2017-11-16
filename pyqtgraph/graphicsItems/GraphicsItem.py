@@ -485,9 +485,15 @@ class GraphicsItem(object):
                 view.sigDeviceRangeChanged.connect(self.viewRangeChanged)
                 view.sigDeviceTransformChanged.connect(self.viewTransformChanged)
             else:
-                # connect signals from ViewBox
-                view.sigRangeChanged.connect(self.viewRangeChanged)
-                view.sigTransformChanged.connect(self.viewTransformChanged)
+                # connect signals from ViewBox            
+                try:
+                    view.sigRangeChanged.connect(self.viewRangeChanged)
+                    view.sigTransformChanged.connect(self.viewTransformChanged)
+                except AttributeError:
+                    pass
+
+
+
             self._connectedView = weakref.ref(view)
             self.viewRangeChanged()
             self.viewTransformChanged()
